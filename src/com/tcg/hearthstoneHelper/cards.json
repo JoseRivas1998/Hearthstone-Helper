@@ -1,0 +1,27 @@
+{
+
+	"Abusive_Sergeant": {
+		"name": "Abusive Sergeant",
+		"rarity": "Common",
+		"cost": 1,
+		"attack": 2,
+		"HP": 1 
+	},
+	
+	"Acolyte_of_Pain": {
+		"name": "Acolyte of Pain",
+		"rarity": "Common",
+		"cost": 3,
+		"attack": 1,
+		"HP": 3
+	},
+	
+	"Amani_Berserker": {
+		"name": "Amani Berserker",
+		"rarity": "Common",
+		"cost": 2,
+		"attack": 2,
+		"HP": 3
+	}
+
+}
