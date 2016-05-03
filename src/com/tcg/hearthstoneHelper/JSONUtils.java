@@ -2,6 +2,8 @@ package com.tcg.hearthstoneHelper;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.util.Arrays;
 import java.util.Collections;
@@ -35,6 +37,24 @@ public class JSONUtils {
 			e.printStackTrace();
 		}
 		return "{}";
+	}
+	
+	public static String getJsonStringFromFile(InputStream in) {
+		try {
+			Scanner scanner;
+			scanner = new Scanner(in);
+			String json = scanner.useDelimiter("\\Z").next();
+			scanner.close();
+			in.close();
+			return json;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return "{}";
+	}
+	
+	public static String getJsonStringFromFile(String name) {
+		return JSONUtils.getJsonStringFromFile(FileHandle.inputStreamFromFile(name));
 	}
 	
 	public static boolean objectExists(JSONObject jsonObject, String key) {

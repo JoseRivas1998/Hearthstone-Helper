@@ -13,7 +13,7 @@ public class Main {
 	
 	public Main() {
 		try {
-			JSONObject jsonObject = new JSONObject(JSONUtils.getJsonStringFromFile(getClass().getResource("cards.json").toURI()));
+			JSONObject jsonObject = new JSONObject(JSONUtils.getJsonStringFromFile("/cards.json"));
 			
 			String[] names = JSONUtils.getNames(jsonObject);
 			for(String s : names) {
