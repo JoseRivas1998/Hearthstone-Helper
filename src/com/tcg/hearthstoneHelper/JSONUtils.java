@@ -57,6 +57,10 @@ public class JSONUtils {
 		return JSONUtils.getJsonStringFromFile(FileHandle.inputStreamFromFile(name));
 	}
 	
+	public static JSONObject getJsonObjectFromFile(String fileName) {
+		return new JSONObject(getJsonStringFromFile(fileName));
+	}
+	
 	public static boolean objectExists(JSONObject jsonObject, String key) {
 		Object o;
 		try {

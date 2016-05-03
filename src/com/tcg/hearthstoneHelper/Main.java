@@ -13,7 +13,7 @@ public class Main {
 	
 	public Main() {
 		try {
-			JSONObject jsonObject = new JSONObject(JSONUtils.getJsonStringFromFile("/cards.json"));
+			JSONObject jsonObject = JSONUtils.getJsonObjectFromFile("/cards.json");
 			
 			String[] names = JSONUtils.getNames(jsonObject);
 			for(String s : names) {
@@ -22,7 +22,6 @@ public class Main {
 				System.out.println();
 			}
 		} catch (JSONException | URISyntaxException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
