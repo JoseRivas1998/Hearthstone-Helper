@@ -38,6 +38,14 @@
 		"cost": 4,
 		"attack": 3,
 		"HP": 3
+	},
+	
+	"Argent_Protector": {
+		"name": "Argent Protector",
+		"rarity": "Common",
+		"cost": 2,
+		"attack": 2,
+		"HP": 2
 	}
 
 }
