@@ -1,51 +1,27 @@
 {
 
-	"Abusive_Sergeant": {
-		"name": "Abusive Sergeant",
-		"rarity": "Common",
-		"cost": 1,
-		"attack": 2,
-		"HP": 1 
+	"Ancestral_Healing": {
+		"name": "Ancestral Healing",
+		"rarity": "Free",
+		"type": "Ability",
+		"class": "Shaman",
+		"cost": 0,
+		"attack": 0,
+		"HP": 0,
+		"set": "Basic",
+		"imgPath": "/Basic/Ancestral_Healing.png"
 	},
 	
-	"Acolyte_of_Pain": {
-		"name": "Acolyte of Pain",
-		"rarity": "Common",
-		"cost": 3,
-		"attack": 1,
-		"HP": 3
-	},
-	
-	"Amani_Berserker": {
-		"name": "Amani Berserker",
-		"rarity": "Common",
-		"cost": 2,
-		"attack": 2,
-		"HP": 3
-	},
-	
-	"Ancient_Brewmaster": {
-		"name": "Ancient Brewmaster",
-		"rarity": "Common",
-		"cost": 4,
-		"attack": 5,
-		"HP": 4
-	},
-	
-	"Arathi_Weaponsmith": {
-		"name": "Arathi Weaponsmith",
-		"rarity": "Common",
-		"cost": 4,
-		"attack": 3,
-		"HP": 3
-	},
-	
-	"Argent_Protector": {
-		"name": "Argent Protector",
-		"rarity": "Common",
-		"cost": 2,
-		"attack": 2,
-		"HP": 2
+	"Backstab": {
+		"name": "Backstab",
+		"rarity": "Free",
+		"type": "Ability",
+		"class": "Rogue",
+		"cost": 0,
+		"attack": 0,
+		"HP": 0,
+		"set": "Basic",
+		"imgPath": "/Basic/Backstab.png"
 	}
 
 }
