@@ -8,16 +8,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import javafx.application.Application;
-import javafx.geometry.Pos;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
 public class Main extends Application{
@@ -26,12 +26,18 @@ public class Main extends Application{
 	
 	private HashMap<String, ArrayList<Card>> cards;
 	
-	private String currentHash;
+	public static final String BOLD = "-fx-font-weight: bold";
+	
 	private int currentIndex;
+	private int currentSet;
 	private JSONObject cardsJson;
 	private ImageView imgView;
 	private Image currentImage;
-	private Text cCardName;
+	private Text cCardName, cCardRarity, cCardType, cCardClass, cCardCost, cCardAttack, cCardHP, cCardSet;
+	
+	private String[] sets = {
+		"Basic"	
+	};
 	
 	public static void main(String[] args) {
 		launch(args);
@@ -44,38 +50,19 @@ public class Main extends Application{
 
 		cards = new HashMap<String, ArrayList<Card>>();
 		
-		cards.put("Basic", new ArrayList<Card>());
+		for(String s : sets) {
+			cards.put(s, new ArrayList<Card>());
+		}
+		
+		currentSet = 0;
 		
 		initCards();
 		
-		currentHash = "Basic";
 		currentIndex = 0;
 		
-		imgView = new ImageView();
-		currentImage = new Image(FileHandle.inputStreamFromFile(getCurrentCard().getImgPath()));
-		imgView.setImage(currentImage);
-		
-		StackPane img = new StackPane();
-		img.getChildren().addAll(imgView);
-		
-		Text cardNameText = new Text("Name:");
-		cardNameText.setStyle("-fx-font-weight: bold");
-		
-		cCardName = new Text(getCurrentCard().getCardName());
-		
-		HBox cardNameHBox = new HBox(5);
-		cardNameHBox.getChildren().addAll(cardNameText, cCardName);
-		
-		VBox right = new VBox();
-		right.getChildren().addAll(cardNameHBox);
-		
-		HBox layout = new HBox(10);
-		layout.getChildren().addAll(img, right);
-		
-		Scene scene = new Scene(layout);
-		
-		window.setScene(scene);
+		window.setScene(initScene());
 		window.getIcons().add(new Image(FileHandle.inputStreamFromFile("/icon.png")));
+		window.setResizable(false);
 		window.show();
 	}
 	
@@ -95,8 +82,129 @@ public class Main extends Application{
 		}
 	}
 
+	private Scene initScene() {
+		
+		imgView = new ImageView();
+		currentImage = new Image(FileHandle.inputStreamFromFile(getCurrentCard().getImgPath()));
+		imgView.setImage(currentImage);
+		
+		StackPane img = new StackPane();
+		img.getChildren().addAll(imgView);
+		
+		Text cardNameText = getBoldText("Name:");
+		
+		cCardName = new Text();
+		
+		Text cardRarityText = getBoldText("Rarity:");
+		
+		cCardRarity = new Text();
+		
+		Text cardTypeText = getBoldText("Type:");
+		
+		cCardType = new Text();
+		
+		Text cardClassText = getBoldText("Class:");
+		
+		cCardClass = new Text();
+		
+		Text cardCostText = getBoldText("Cost:");
+		
+		cCardCost = new Text();
+		
+		Text cardAttackText = getBoldText("Attack:");
+		
+		cCardAttack = new Text();
+		
+		Text cardHPText = getBoldText("HP:");
+		
+		cCardHP = new Text();
+		
+		Text cardSetText = getBoldText("Set:");
+		
+		cCardSet = new Text();
+		
+		updateCurrentCard();
+		
+		HBox[] cardBoxes = {
+			getTextHBox(cardNameText, cCardName), getTextHBox(cardRarityText, cCardRarity),
+			getTextHBox(cardTypeText, cCardType), getTextHBox(cardClassText, cCardClass),
+			getTextHBox(cardCostText, cCardCost), getTextHBox(cardAttackText, cCardAttack),
+			getTextHBox(cardHPText, cCardHP), getTextHBox(cardSetText, cCardSet)
+		};
+		
+		Button prev = new Button();
+		prev.setFont(Font.loadFont(FileHandle.inputStreamFromFile("/fontawesome.ttf"), 12));
+		prev.setText("\uf060");
+		prev.setOnAction(e -> {
+			currentIndex--;
+			if(currentIndex < 0) {
+				currentSet--;
+				if(currentSet < 0) {
+					currentSet = sets.length - 1;
+				}
+				currentIndex = cards.get(sets[currentSet]).size() - 1;
+			}
+			updateCurrentCard();
+		});
+		
+		Button next = new Button();
+		next.setFont(Font.loadFont(FileHandle.inputStreamFromFile("/fontawesome.ttf"), 12));
+		next.setText("\uf061");
+		next.setOnAction(e -> {
+			currentIndex++;
+			if(currentIndex >= cards.get(sets[currentSet]).size()) {
+				currentSet++;
+				if(currentSet >= sets.length) {
+					currentSet = 0;
+				}
+				currentIndex = 0;
+			}
+			updateCurrentCard();
+		});
+		
+		HBox buttonBox = new HBox(5);
+		buttonBox.getChildren().addAll(prev, next);
+		
+		VBox right = new VBox();
+		right.getChildren().addAll(buttonBox);
+		right.getChildren().addAll(cardBoxes);
+		right.setPadding(new Insets(40, 20, 0, 0));
+		
+		HBox layout = new HBox(10);
+		layout.getChildren().addAll(img, right);
+		
+		Scene scene = new Scene(layout);
+		return scene;
+	}
+	
 	public Card getCurrentCard() {
-		return cards.get(currentHash).get(currentIndex);
+		return cards.get(sets[currentSet]).get(currentIndex);
+	}
+	
+	private HBox getTextHBox(Text... texts) {
+		HBox box = new HBox(5);
+		box.getChildren().addAll(texts);
+		return box;
+	}
+	
+	private Text getBoldText(String text) {
+		Text t = new Text(text);
+		t.setStyle(BOLD);
+		return t;
+	}
+	
+	private void updateCurrentCard() {
+		currentImage = new Image(FileHandle.inputStreamFromFile(getCurrentCard().getImgPath()));
+		imgView.setImage(currentImage);
+		cCardName.setText(getCurrentCard().getCardName());		
+		cCardRarity.setText(getCurrentCard().getRarity());		
+		cCardType.setText(getCurrentCard().getType());		
+		cCardClass.setText(getCurrentCard().getCardClass());
+		cCardCost.setText(String.valueOf(getCurrentCard().getCost()));
+		cCardAttack.setText(String.valueOf(getCurrentCard().getAttack()));
+		cCardHP.setText(String.valueOf(getCurrentCard().getHealth()));
+		cCardSet.setText(String.valueOf(getCurrentCard().getSet()));
+		window.sizeToScene();
 	}
 	
 }
