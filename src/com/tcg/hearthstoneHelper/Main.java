@@ -15,6 +15,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
 public class Main extends Application{
@@ -28,6 +31,7 @@ public class Main extends Application{
 	private JSONObject cardsJson;
 	private ImageView imgView;
 	private Image currentImage;
+	private Text cCardName;
 	
 	public static void main(String[] args) {
 		launch(args);
@@ -48,19 +52,25 @@ public class Main extends Application{
 		currentIndex = 0;
 		
 		imgView = new ImageView();
-		currentImage = new Image(FileHandle.inputStreamFromFile(cards.get(currentHash).get(currentIndex).getImgPath()));
+		currentImage = new Image(FileHandle.inputStreamFromFile(getCurrentCard().getImgPath()));
 		imgView.setImage(currentImage);
-		
-		Label cardS = new Label(cards.get(currentHash).get(currentIndex).toString());
-		
-		StackPane right = new StackPane();
-		right.setAlignment(Pos.CENTER);
-		right.getChildren().addAll(cardS);
 		
 		StackPane img = new StackPane();
 		img.getChildren().addAll(imgView);
+		
+		Text cardNameText = new Text("Name:");
+		cardNameText.setStyle("-fx-font-weight: bold");
+		
+		cCardName = new Text(getCurrentCard().getCardName());
+		
+		HBox cardNameHBox = new HBox(5);
+		cardNameHBox.getChildren().addAll(cardNameText, cCardName);
+		
+		VBox right = new VBox();
+		right.getChildren().addAll(cardNameHBox);
+		
 		HBox layout = new HBox(10);
-		layout.getChildren().addAll(img, cardS);
+		layout.getChildren().addAll(img, right);
 		
 		Scene scene = new Scene(layout);
 		
@@ -85,4 +95,8 @@ public class Main extends Application{
 		}
 	}
 
+	public Card getCurrentCard() {
+		return cards.get(currentHash).get(currentIndex);
+	}
+	
 }
