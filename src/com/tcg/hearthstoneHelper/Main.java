@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -63,6 +64,7 @@ public class Main extends Application{
 		window.setScene(initScene());
 		window.getIcons().add(new Image(FileHandle.inputStreamFromFile("/icon.png")));
 		window.setResizable(false);
+		window.setWidth(500);
 		window.show();
 	}
 	
@@ -204,7 +206,6 @@ public class Main extends Application{
 		cCardAttack.setText(String.valueOf(getCurrentCard().getAttack()));
 		cCardHP.setText(String.valueOf(getCurrentCard().getHealth()));
 		cCardSet.setText(String.valueOf(getCurrentCard().getSet()));
-		window.sizeToScene();
 	}
 	
 }

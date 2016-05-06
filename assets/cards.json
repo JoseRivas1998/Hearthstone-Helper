@@ -22,6 +22,18 @@
 		"HP": 0,
 		"set": "Basic",
 		"imgPath": "/Basic/Backstab.png"
+	},
+	
+	"Innervate": {
+		"name": "Innervate",
+		"rarity": "Free",
+		"type": "Ability",
+		"class": "Druid",
+		"cost": 0,
+		"attack": 0,
+		"HP": 0,
+		"set": "Basic",
+		"imgPath": "/Basic/Innervate.png"
 	}
 
 }
